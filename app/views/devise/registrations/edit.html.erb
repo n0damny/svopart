@@ -1,0 +1,71 @@
+<% @cart = Cart.find(session[:cart_id]) %>
+<% if !@cart %>
+  <% @cart = Cart.create %>
+  <% session[:cart_id] = @cart.id %>
+<% end %>
+<div class = "spec_offer">
+  <div id="spec_offer_title">
+    <p>Изменение вашего профиля, <%= current_user.username %></p>
+  </div>
+  <div id = "changing_user">
+    <%= form_for(resource, :as => resource_name, 
+                           :url => registration_path(resource_name), 
+                           :html => { :method => :put }) do |f| %>
+      <%= devise_error_messages! %>
+  
+      <p><%= f.label :username, "имя пользователя:" %><br />
+      <%= current_user.username %></p>
+  
+      <p><%= f.label :email, "email:" %><br />
+      <%= current_user.email %></p>
+
+      <p><%= f.label :password, "новый пароль:" %> <i>(Оставьте пустым, если не хотите менять его)</i><br />
+      <%= f.password_field :password %></p>
+
+      <p><%= f.label :password_confirmation, "подтвердите новый пароль:" %><br />
+      <%= f.password_field :password_confirmation %></p>
+
+      <p><%= f.label :current_password, "старый пароль:" %> 
+        <i>(нужен текущий пароль для применения изменений)</i><br />
+      <%= f.password_field :current_password %></p>
+
+      <% if current_user.litso and current_user.litso == 'fizik' %>
+        <p><%= f.label :dbirth, "день рождения:" %><br />
+        <%= f.text_field :dbirth %></p>
+      <% end %>
+      <p>
+        <% if current_user.litso and current_user.litso == 'fizik' %>
+          <%= f.label :firstname, "ф.и.о.:" %>
+        <% elsif current_user.litso and current_user.litso == 'urik' %>
+          <%= f.label :firstname, "название юр. лица:" %><br />
+        <% end %>
+      <%= f.text_field :firstname %></p>
+
+      <p><%= f.label :city, "город:" %><br />
+      <%= f.text_field :city %></p>
+
+      <p><%= f.label :address1, "адрес 1:" %><br />
+      <%= f.text_area :address1, :rows => 6, :cols => 25 %></p>
+
+      <p><%= f.label :metro1, "ближайшее метро:" %><br />
+      <%= f.text_field :metro1 %></p>
+
+      <p><%= f.label :address2, "адрес 2:" %><br />
+      <%= f.text_area :address2, :rows => 6, :cols => 25 %></p>
+
+      <p><%= f.label :metro2, "ближайшее метро:" %><br />
+      <%= f.text_field :metro2 %></p>
+
+      <% if current_user.litso and current_user.litso == 'fizik' %>
+        <p><%= f.label :accnt, "номер лицевого счета:" %><br />
+        <%= f.text_field :accnt %></p>
+      <% end %>
+
+      <p><%= f.submit "изменить" %></p>
+    <% end %>
+
+
+
+    <br/><%= link_to "Назад", :back %>
+  </div>
+</div>

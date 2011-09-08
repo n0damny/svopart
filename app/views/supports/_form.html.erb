@@ -1,0 +1,46 @@
+<p style = "color:black;text-align:justify;">Если у вас возникли вопросы, связанные с работой Интернет-магазина СВОПАРТ, или вы не можете до нас дозвониться, напишите нам сообщение.</p>
+
+<% form_for @support, :url => { :action => "create" }, :html => { :method => :post } do |f| %>
+  
+
+
+<table>
+<tr >  
+    <td align = "right" valign = "top">
+      <%= f.label "Как вас зовут?" %>
+    </td>
+    <td align = "left">
+      <%= f.text_field :sender_name, :size => 50 %>
+    </td>
+  </tr>
+  <tr>
+    <td align = "right" valign = "top">
+    <%= f.label "Ваш e-mail, на который будет выслан ответ:" %>
+    </td>
+    <td align = "left">
+      <%= f.text_field :email, :size => 50 %>
+    </td>  
+  </tr>
+  <tr>
+    <td align = "right" valign = "top">
+      <%= f.label "Тема сообщения:" %>
+    </td>
+    <td align = "left">
+      <%= f.select :support_type, options_for_select(["Вопрос по товарам", "Идеи по работе магазина", "Другой немаловажный вопрос"]), :cols => 40 %>
+    </td>
+  </tr>
+  <tr>
+    <td align = "right" valign = "top">
+      <%= f.label "Сообщение:" %>
+    </td>
+    <td align = "left">
+      <%= f.text_area :content, :rows => 6, :cols => 40 %>
+    </td>
+  </tr>
+</table>
+  
+  <p>
+    <%= f.submit '', :class => 'feed_button shadow' %>
+  </p>
+<% end %>
+

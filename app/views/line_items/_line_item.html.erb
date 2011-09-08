@@ -1,0 +1,28 @@
+
+<tr class = "cart_item" align = "center">
+  <td><%= link_to image_tag (line_item.product.image.url(:thumb)), store_about_product_path(:id => line_item.product.id) %></td>
+  <td class = "bleft" align = "left"><%= link_to line_item.product.title, store_about_product_path(:id => line_item.product.id) %></td>
+  <td class="item_price bleft" ><%= number_to_currency(line_item.product.price) %></td>
+  <td class = "bleft">
+    <% if line_item.order_id %>
+      &times; <%= line_item.quantity %>
+    <% else %>
+      <%= form_for(line_item) do |f| %>
+      <div class="field">
+        &times; <%= f.number_field :quantity, :min => 1, :size => 1 %>
+      </div>
+      <div class="actions">
+        <%= f.submit 'изменить' %>
+      </div>
+      <% end %>
+    <% end %>
+  </td>
+  <td class="item_price bleft" ><%= number_to_currency(line_item.total_price) %></td>
+  <% if !line_item.order_id %>
+    <td class = "bleft">
+      <%= button_to '', line_item, :method => :delete, :title => "Удалить позицию", :confirm => 'Уверены, что хотите удалить позицию?',
+          :class => "del_button" %>
+    </td>
+  <% end %>
+</tr>
+<tr><td colspan = 6 class = "bbottom"></td></tr>

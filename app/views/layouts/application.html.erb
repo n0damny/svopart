@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>СВОПАРТ - картриджи и расходные материалы</title>
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag 'jquery.min.js', 'rails.js', 'dd_roundies.js', 'jquery.tooltip.js', 'jquery.gritter.min.js', 'jquery.colorbox-min.js', 'application.js' %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+<div class="box">
+
+
+
+<!-- Begin Wrapper -->
+		 
+		 <!-- Begin Left Column -->
+		<div id="sidebar">
+		 
+      <%= link_to image_tag("logo1.jpg"), root_path %>
+      <div class = "sidebar_content">
+        <div id = 'search'>
+          <p>Поиск</p>
+          <form action='/store/akafilt' method='get'>
+            <input type='text' value='<%= params[:search] %>' name='search' class = 'input_line'>
+            </br>
+            <input type='submit' value='' class = "search_button shadow">
+          </form>
+          <ul>
+            <li><%= link_to '› Расширенный поиск', store_advanced_search_path %></li>
+            <li></li>
+          </ul>
+        </div>
+        <div>
+          <p>Каталог</p>
+          <ul>
+            <% Product.find_by_sql("SELECT DISTINCT category, producer FROM Products order by producer").each do |prod| %>
+              <%= link_to store_akafilt_path(:producer => prod.producer, :category =>prod.category) do %>
+                <li>› <%= prod.category.mb_chars.capitalize.to_s %> <%= prod.producer %></li>
+              <% end %>
+            <% end %>
+            <li></li>
+          </ul>
+        </div>
+		  </div>
+	  </div>
+		<!-- End Left Column -->
+		 
+		<!-- Begin Right Column -->
+    
+	  <div id = "header">	
+      <p><b><%= link_to 'www.svopart.ru', root_path %> 
+          <span style="padding:0px 10px 0 10px;">/</span>
+                    Добро пожаловать<% if user_signed_in? %>, <%= current_user.username %>!</b>
+          <%= link_to "Выйти", destroy_user_session_path, :id => "header_logout" %></p>
+          <% else %>!</b></p>
+          <% end %>
+    </div>
+    <div id="content">
+    
+      <ul class = "main_links shadow">
+        <li id = "inform"><%= link_to "", store_information_path %></li>
+        <li id = "delivery"><%= link_to "", store_delivery_path %></li>
+        <li id = "vacancy"><%= link_to "", store_vacancy_path %></li>
+        <li id = "contacts"><%= link_to "", store_contacts_path %></li>
+      </ul>
+
+      <div class = "logcart_bar">
+        <div class = "log_in">
+          <p>Ваш аккаунт</p>
+          <div id = "user_nav"> 
+            <% if user_signed_in? %>
+              <p style = "padding-top:14px;">Вы зашли как <b><%= current_user.username %></b>.</p>
+              <br />
+              <p><%= link_to "Изменить профиль", edit_registration_path(current_user) %></p>
+              <br />
+              <% if can? :manage, @products %>
+                <p><%= link_to "К а т а л о г", products_url %></p>
+                <p><%= link_to "А к к а у н т ы", store_users_url %></p>
+                <p><%= link_to "Список___з а к а з о в", orders_url %></p>
+              <% else %>
+                <p><%= link_to "Мои шаблоны", store_my_templates_path %></p>
+                <p><%= link_to "История заказов", store_profile_path %></p>
+              <% end %>
+              <br />
+              <!--<p>Не вы? <%= link_to "Выйти", destroy_user_session_path %></p>-->
+            <% else %>
+              <%= render "devise/sessions/new" %>
+              <!--<br />
+              <%= link_to "Зарегистрироваться", new_user_registration_path %>
+              <br />
+              <%= link_to "Войти", new_user_session_path %>-->
+            <% end %>
+          </div>
+
+        </div>
+        <div class = "cart_wrap">
+            <h3>Корзина</h3>
+            <% if @cart %>
+              <div id = "cart">
+                <%= render "carts/cart", :cart => @cart %>
+              </div>
+            <% end %>
+          </div>
+        <div  class = "contacts_on_bar">
+          <p>Контакты</p>
+          <div>
+            <%= image_tag "wqe/clock.jpg" %>
+            <h3>Мы на связи!</h3>
+            <ul>
+              <li>+7 (926) <span style = "font-size:1.3em;color:red;">012-56-12</span></li>
+              <li><%= link_to "info@svopart.ru", 'mailto:info@svopart.ru' %></li>
+              <li><%= link_to 'обратная связь', new_support_path %></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <% if flash[:notice] -%>
+        <script type="text/javascript">
+          $.gritter.add({
+         	  // (string | обязательно) заголовок сообщения
+         	  title: 'подсказка',
+            // (string | обязательно) текст сообщения
+        	  text: '<%= escape_javascript flash[:notice] %>',
+            time: '3000'
+          });
+        </script>
+      <% end -%>
+      <% if flash[:error] -%>
+        <script type="text/javascript">
+          $.gritter.add({
+           	// (string | обязательно) заголовок сообщения
+           	title: 'ошибка!',
+          	// (string | обязательно) текст сообщения
+          	text: '<%= escape_javascript flash[:error] %>',
+            time: '3000'
+          });
+        </script>
+      <% end -%>  
+  
+  		<%= yield %>
+
+
+		</div>
+		<!-- End Right Column -->
+		<div id="footer">&copy; 2011 Интернет-магазин СВОПАРТ - картриджи и расходные материалы. 
+                      <%= link_to "+7 (926) 012-56-12", store_contacts_path %></div>
+    <div id = "oferta"><p>Вся информация на сайте носит справочный характер и не является публичной офертой, определяемой положениями Статьи 437 Гражданского кодекса Российской Федерации. Технические параметры и комплект поставки могут быть изменены производителем без предварительного уведомления. Пожалуйста, уточняйте информацию у наших менеджеров.</p></div>
+  
+<!-- End Wrapper -->
+    </div>
+<div id = 'wip'>
+<span>сайт находится на стадии разработки
+  </br>Наличие, стоимость и заказ товаров - 8 (926) 012-56-12, <%= link_to "info@svopart.ru", 'mailto:info@svopart.ru' %></span>
+</div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+﻿<div class = "spec_offer">
+  <div id="spec_offer_title">
+    <p>заказ №<%= @order.order_num %></p>
+  </div>
+  <div class = "info">
+    </br>
+    <p>Заказ на сумму <%= number_to_currency(@order.line_items.to_a.sum { |item| item.total_price }) %>
+      </br>из них доставка: <%= number_to_currency(@order.delivery) %></p>
+
+    <p>Создан в</br><%= @order.created_at.strftime("%H:%M %d.%m.%Y") %></p>
+
+    <p>Получатель:
+      </br><%= @order.name %></p>
+
+    <p>Телефон:</br><%= @order.phone %></p>
+
+    <p>Оплата:</br><%= @order.pay_type %></p>
+
+    </br>
+    <table class = "view_cart">
+    
+    <tr align = "center">
+      <th>Изображение</th>
+      <th class = "bleft">Наименование</th>
+      <th class = "bleft">Количество</th>
+      <th class = "bleft">Цена</th>
+    </tr>
+    <tr><td colspan = 5 class = "bbottom"></td></tr>
+      <%= render @order.line_items %>
+    </table>
+  <%= link_to 'распечатать', '#' %>
+  <% if can? :edit, Order %>  
+    <%= #link_to 'Edit', edit_order_path(@order) 
+    %> 
+  <% end %>
+    <%= link_to 'назад', store_profile_path %>
+  </div>
+</div>

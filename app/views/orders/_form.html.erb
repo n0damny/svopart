@@ -1,0 +1,146 @@
+<% if current_user %>
+  <%= form_for(@order) do |f| %>
+    <% if @order.errors.any? %>
+
+      <script type="text/javascript">
+        $.gritter.add({
+          // (string | обязательно) заголовок сообщения
+          title: 'Так нельзя оформить:',
+          // (string | обязательно) текст сообщения
+          text: '<% @order.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %>',
+          time: '6000'
+        });
+      </script>
+      
+    <% end %>
+
+
+    <%= f.hidden_field :order_num %>
+    <%= f.hidden_field :email, :value => current_user.email %>
+    <%= f.hidden_field :status, :value => 'В обработке' %>
+    <div class = "left_info">
+      <p class="field">
+        <%= f.label :name, "Имя" %><br />
+        <%= f.text_field :name, :value => current_user.firstname, :size => 40 %>
+      </p>
+      <p class="field">
+        <%= f.label :phone, "Телефон" %><br />
+        <%= f.text_field :phone, :value => current_user.phone, :size => 40 %>
+      </p>
+    </div>
+    <div class = "rght_info">
+      <p class="field">
+        <%= f.label :advance_info, "Дополнительная информация" %><br />
+        <%= f.text_area :advance_info, :rows => 3, :cols => 40 %>
+      </p>
+      <p class="field">
+        <%= f.label :pay_type, "Метод оплаты" %><br />
+        <%= f.select :pay_type, Order::PAYMENT_TYPES,
+        :prompt => 'Выберите...' %>
+      </p>
+    </div>
+    <p>
+      <div style = "display:block;text-align:left;margin-left:180px;">
+
+        <%= f.radio_button(:deliv_type, "самовывоз", :checked => true) %>
+        <%= f.label(:deliv_type, "Самовывоз с нашего склада, Москва ") %>
+        <br />
+        <%= f.radio_button(:deliv_type, "доставка по москве") %>
+        <%= f.label(:deliv_type, "Доставка в пределах Москвы") %>
+        <br />
+        <%= f.radio_button(:deliv_type, "доставка в мо") %>
+        <%= f.label(:deliv_type, "Доставка по МО") %>      
+
+      </div>
+    </p>
+    <p class="field" id = "address">
+      <%= f.label :address, "Адрес" %><br />
+      <%= f.text_area :address, :value => current_user.address1, :rows => 3, :cols => 40 %>
+    </p>
+      <%= f.hidden_field :user_id, :value => current_user.id %>
+    <p class="actions">
+      <%= f.submit 'Оформить' %>
+    </p>
+
+  <% end %>
+<% else %>
+  <% user ||= User.new %>
+  <p>Текст, убеждающий в необходимости регистрации и <%= link_to 'ссылка на саму регистрацию', new_user_registration_path %></p>
+
+
+  <%= form_for(@order) do |f| %>
+    <% if @order.errors.any? %>
+      <script type="text/javascript">
+        $.gritter.add({
+          // (string | обязательно) заголовок сообщения
+          title: 'Так нельзя оформить:',
+          // (string | обязательно) текст сообщения
+          text: '<% @order.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %>',
+          time: '6000'
+        });
+      </script>
+      <div id="error_explanation">
+        <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+        <ul>
+          <% @order.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= f.hidden_field :order_num %>
+    <%= f.hidden_field :status, :value => 'в обработке' %>
+    <div class = "left_info">
+      <p class="field">
+        <%= f.label :name, "Имя" %><br />
+        <%= f.text_field :name, :size => 40 %>
+      </p>
+      <p class="field">
+        <%= f.label :email, "Email" %><br />
+        <%= f.email_field :email, :size => 40 %>
+      </p>
+      <p class="field">
+        <%= f.label :phone, "Телефон (с кодом страны и города)" %><br />
+        <%= f.text_field :phone, :size => 40 %>
+      </p>
+    </div>
+    <div class = "rght_info">
+      <p class="field">
+        <%= f.label :advance_info, "Дополнительная информация" %><br />
+        <%= f.text_area :advance_info, :rows => 3, :cols => 40 %>
+      </p>
+      <p class="field">
+        <%= f.label :pay_type, "Метод оплаты" %><br />
+        <%= f.select :pay_type, Order::PAYMENT_TYPES,
+        :prompt => 'Выберите...' %>
+      </p>
+    </div>
+    </br>      
+    <p>
+      <div style = "display:block;text-align:left;margin-left:180px;">
+
+        <%= f.radio_button(:deliv_type, "самовывоз", :checked => true) %>
+        <%= f.label(:deliv_type, "Самовывоз с нашего склада, Москва ") %>
+        <br />
+        <%= f.radio_button(:deliv_type, "доставка по москве") %>
+        <%= f.label(:deliv_type, "Доставка в пределах Москвы") %>
+        <br />
+        <%= f.radio_button(:deliv_type, "доставка в мо") %>
+        <%= f.label(:deliv_type, "Доставка по МО") %>      
+
+      </div>
+    </p>
+    <p class="field" id = "address">
+      <%= f.label :address, "Адрес" %><br />
+      <%= f.text_area :address, :rows => 3, :cols => 40 %>
+    </p>      
+
+    <%= f.hidden_field :user_id, :value => user.id %>
+    <p class="actions">
+    <%= f.submit 'Оформить' %>
+    </p>
+  <% end %>
+<% end %>
+

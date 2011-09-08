@@ -1,0 +1,10 @@
+
+
+
+$('#cart').html("<%= escape_javascript(render(@cart)) %>");
+
+
+$(".add_to_cart").click(function () {
+                 $(".current_item").effect("highlight", {}, 4000);
+             });
+

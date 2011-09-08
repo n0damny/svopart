@@ -1,0 +1,38 @@
+<div class = "spec_offer">
+  <div id="spec_offer_title">
+    <p>расширенный поиск</p>
+  </div>
+  
+  <div id = "user_enters">
+    <% form_tag '/store/akafilt', :method => :get do %>
+      <p class="field">
+        <%= label :title, "Название" %><br />
+        <%= text_field_tag :title %>
+      </p>
+      <p class="field">
+        <%= label :producer, "Производитель" %><br />
+        <%= text_field_tag :producer %>
+      </p>
+      <p class="field">
+        <%= label :model, "Модель" %><br />
+        <%= text_field_tag :model %>
+      </p>
+      <p class="field">
+        <%= label :print_tech, "Технология печати" %><br />
+        
+        <%= select(:print_tech, :print_tech, Product.find_by_sql("SELECT DISTINCT print_tech FROM Products order by print_tech").collect {|m| [ m.print_tech, m.print_tech ]}, {:prompt => 'выберите технологию'}) %>
+      </p>
+      <p class="field">
+        <%= label :color, "Цвет" %><br />
+        <%= select(:color, :color, Product.find_by_sql("SELECT DISTINCT color FROM Products order by color").collect {|m| [ m.color, m.color ]}, {:prompt => 'выберите цвет'}) %>
+      </p>
+      <p class="field">
+        <%= label :compatibility, "Совместимость" %><br />
+        <%= text_field_tag :compatibility %>
+      </p>
+      <p >
+        <%= submit_tag '', :class=>"search_button shadow" %>
+      </p>
+    <% end %>
+  </div>
+</div>

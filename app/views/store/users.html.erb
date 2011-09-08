@@ -1,0 +1,70 @@
+<h1>Listing users</h1>
+
+<table>
+  <tr>                   
+    <th>username</th>
+    <th>email</th>
+    <th>dbirth</th>
+    <th>firstname</th>
+    <th>city</th>
+    <th>phone</th>
+    <th>litso</th>
+    <th>address1</th>
+    <th>metro1</th>
+    <th>address2</th>
+    <th>metro2</th>
+    <th>accnt</th>
+    <th>role</th>
+  </tr>
+  
+  <% @users.each do |usr| %>
+  <tr>
+  <%= form_for(usr, :as => resource_name, 
+                           :url => registration_path(resource_name), 
+                           :html => { :method => :put }) do |f| %>
+  
+      <td><br />
+      <%= usr.username %></td>
+  
+      <td><br />
+      <%= usr.email %></td>
+
+      <td><br />
+      <%= f.text_field :dbirth, :size => 15 %></td>
+      
+      <td><br />
+        <%= f.text_field :firstname, :size => 15 %></td>
+
+      <td><br />
+      <%= f.text_field :city, :size => 15 %></td>
+
+      <td><br />
+      <%= f.text_field :phone, :size => 15 %></td>
+
+      <td><br />
+      <%= f.text_field :litso, :size => 15 %></td>
+
+      <td><br />
+      <%= f.text_field :address1, :size => 15 %></td>
+
+      <td><br />
+      <%= f.text_field :metro1, :size => 15 %></td>
+
+      <td><br />
+      <%= f.text_field :address2, :size => 15 %></td>
+
+      <td><br />
+      <%= f.text_field :metro2, :size => 15 %></td>
+
+      <td><br />
+        <%= f.text_field :accnt, :size => 15 %></td>
+
+      <td><br />
+      <%= f.select :role, User::ROLES %></td>
+      
+      <td><%= f.submit "изменить" %></td>
+    <% end %>
+  </tr>
+
+  <% end %>
+</table>

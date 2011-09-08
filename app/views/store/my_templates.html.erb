@@ -1,0 +1,66 @@
+<div class = "spec_offer">
+  <div id="spec_offer_title">
+    <p>мои шаблоны</p>
+  </div>
+
+  <div class = "">
+  <% if current_user %>
+    
+  <% if @templates && @templates.length > 0  %>
+
+
+  
+    <table class = "view_cart">
+
+      <tr align = "center">
+        <th>Фото</th>
+        <th class = "bleft">Наименование</th>      
+        <th class = "bleft">Цена</th>
+        <th class = "bleft"></th>
+        <th class = "bleft"></th>
+      </tr>
+      <tr><td colspan = 5 class = "bbottom"></td></tr>
+      <% @templates.each do |template| %>
+        <tr class = "cart_item" align = "center">
+          <td>
+            <%= link_to image_tag (template.product.image.url(:thumb)), store_about_product_path(:id => template.product_id) %>
+          </td>
+          <td class = "bleft" align = "left">
+            <%= link_to template.product.title, store_about_product_path(:id => template.product_id) %>
+          </td>
+          <td class="item_price bleft" >
+            <%= number_to_currency(template.product.price) %>
+          </td>
+          <td class = "bleft">
+            <%= button_to '', line_items_path(:product_id => template.product_id), :remote => true, :class => "add_to_cart", :title => "Добавить в корзину" %>
+          </td>
+          <td class = "bleft">
+            <%= button_to '', template, :method => :delete, :title => "Удалить позицию", :confirm => 'Уверены, что хотите удалить позицию?', :class => "del_button" %>
+          </td>
+
+        </tr>
+
+        <tr><td colspan = 5 class = "bbottom"></td></tr>
+      <% end %>
+
+
+
+      <tr>
+        <td colspan="2" align = "right">
+          <%= button_to '', line_items_path, :remote => true, :class => "add_to_cart_big", :title => "Все позиции добавить в корзину" %>
+
+        </td>
+      </tr>
+    </table>
+    <% else %>
+      <p>У вас нет сохранённых шаблонов</p>
+    <% end %>
+  <% else %>
+    <p>Для того, чтобы воспользоваться шаблонами, вам нужно сначала войти на сайт, использую свои логин и пароль</p>
+
+  <% end %>  
+  </div>
+</div>
+
+<% #4997233804
+%>

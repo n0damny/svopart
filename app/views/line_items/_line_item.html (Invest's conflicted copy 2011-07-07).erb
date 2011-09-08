@@ -1,0 +1,21 @@
+
+<tr class = "cart_item" align = "center">
+  <td><%= image_tag line_item.product.image.url(:thumb) %>
+  <td class = "bleft"><%= line_item.product.title %></td>
+  <td class = "bleft">
+    <% if line_item.order_id %>
+      &times; <%= line_item.quantity %>
+    <% else %>
+      <%= form_for(line_item) do |f| %>
+      <div class="field">
+        &times; <%= f.text_field :quantity, :size => 1 %>
+      </div>
+      <div class="actions">
+        <%= f.submit 'изменить' %>
+      </div>
+      <% end %>
+    <% end %>
+  </td>
+  <td class="item_price bleft" ><%= number_to_currency(line_item.total_price) %></td>
+</tr>
+<tr><td colspan = 4 class = "bbottom"></td></tr>

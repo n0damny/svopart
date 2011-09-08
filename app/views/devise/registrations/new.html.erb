@@ -1,0 +1,146 @@
+<% @cart = Cart.find(session[:cart_id]) %>
+<% if !@cart %>
+  <% @cart = Cart.create %>
+  <% session[:cart_id] = @cart.id %>
+<% end %>
+<script type="text/javascript" src="http://dev.jquery.com/view/trunk/plugins/tooltip/jquery.tooltip.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+      
+      $("#user_enters").hide();
+      $(".fizik").hide();
+      $(".urik").hide();
+    $('.fiz_chosen').click(function () { 
+        $(this).slideUp();$('.urik_chosen').slideUp();
+        $("#user_enters").slideDown();
+        $("#title").hide();
+        $(".fizik").show();$(".urik").hide(); 
+        var chsn = ".fiz_chosen";
+      });
+    $(".urik_chosen").click(function () { 
+        $(this).slideUp();$('.fiz_chosen').slideUp();
+        $("#user_enters").slideDown();
+        $("#title").hide();
+        $(".urik").show();$(".fizik").hide();
+        var chsn = ".urik_chosen";
+      });    
+    $("#back_chosen").click(function () { 
+        $("#title").show();$(".fizik").hide();$(".urik").hide();
+        $("#user_enters").slideUp();
+        $('.fiz_chosen').slideDown();
+        $(".urik_chosen").slideDown();
+      });
+      $(".fiz_chosen").tooltip();  
+      $(".urik_chosen").tooltip();
+      
+
+      $().html(function() {
+        return '<% litso = '+ chsn +' %>';
+      });
+
+   
+    });
+
+</script>
+
+<div class = "spec_offer">
+  <div id="spec_offer_title">
+    <p id = "title">регистрация нового пользователя</p>
+    <p class = "fizik">регистрация физического лица</p>
+    <p class = "urik">регистрация юридического лица</p>
+  </div>
+
+  <div class = "left_info">
+    <%= image_tag '/images/wqe/user.png', :class => "fiz_chosen", :title => "Кликните сюда для регистрации как физическое лицо" %>
+	  <p class = "fiz_chosen urik_chosen">Физическое лицо</p>
+	</div>
+
+  <div class = "rght_info">
+	  <%= image_tag '/images/wqe/business_user.png', :class => "urik_chosen", :title => "Кликните сюда для регистрации как юридическое лицо"%>
+    <p class = "fiz_chosen urik_chosen">Юридическое лицо</p>
+  </div>
+
+
+<div id = "user_enters">
+    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+
+      <% if resource.errors.any? %>
+        <script type="text/javascript">
+          $.gritter.add({
+         	  // (string | обязательно) заголовок сообщения
+         	  title: 'нельзя создать такого пользователя:',
+            // (string | обязательно) текст сообщения
+        	  text: '<% resource.errors.full_messages.each do |msg| %><p><%= msg %></p><% end %>',
+            time: '6000'
+          });
+        </script>
+      <% end -%>
+
+      <%= link_to 'Сменить тип клиента!', '#', :id => "back_chosen" %>
+<br/>
+
+
+
+  <div class = "left_info">
+
+	    <p>Обязательно для заполнения</p>
+	  
+      <p><%= f.label :username, "имя пользователя:" %><br />
+      <%= f.text_field :username %></p>
+
+      <p><%= f.label :email, "email:" %><br />
+      <%= f.email_field :email %></p>
+
+      <p><%= f.label :password, "пароль:" %><br />
+      <%= f.password_field :password %></p>
+
+      <p><%= f.label :password_confirmation, "подтверждение пароля:" %><br />
+      <%= f.password_field :password_confirmation %></p>
+
+	</div>
+  <div class = "rght_info">
+  
+      <p>Дополнительная информация</p>
+
+      <p class = "fizik"><%= f.label :dbirth, "день рождения:" %><br />
+      <%= f.text_field :dbirth %></p>
+
+      <p><%= f.label :firstname, "ф.и.о.:", :class => "fizik" %>
+          <%= f.label :firstname, "название юр. лица:",  :class => "urik" %><br />
+      <%= f.text_field :firstname %></p>
+      
+      <p><%= f.label :city, "телефон:" %><br />
+      <%= f.text_field :phone %></p>
+
+      <p><%= f.label :city, "город:" %><br />
+      <%= f.text_field :city %></p>
+
+      <p><%= f.label :address1, "адрес 1:" %><br />
+      <%= f.text_area :address1, :rows => 6, :cols => 25 %></p>
+
+      <p><%= f.label :metro1, "ближайшее метро:" %><br />
+      <%= f.text_field :metro1 %></p>
+
+      <p><%= f.label :address2, "адрес 2:" %><br />
+      <%= f.text_area :address2, :rows => 6, :cols => 25 %></p>
+
+      <p><%= f.label :metro2, "ближайшее метро:" %><br />
+      <%= f.text_field :metro2 %></p>
+
+      <p class = "urik"><%= f.label :accnt, "номер лицевого счета:" %><br />
+      <%= f.text_field :accnt %></p>
+
+  </div>
+
+      <%= f.hidden_field :litso, :value => litso, :class => litso %>
+      <%= f.hidden_field :role, :value => 'client' %>  
+      <!--<p><%= f.label :role %><br />
+      <%= f.collection_select :role, User::ROLES, :to_s, :humanize %></p>-->
+
+      <p><%= f.submit '', :class => "reg_button shadow" %></p>
+    <% end %>
+
+    <%= render :partial => "devise/shared/links" %>
+  </div>
+</div>

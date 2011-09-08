@@ -1,0 +1,118 @@
+<script>
+  
+</script>
+
+<h1>Список товаров</h1>
+
+
+<table>
+  <tr>
+    <th>Категория</th>
+    <th>Название</th>
+    <th>Производитель</th>
+    <th>Модель</th>
+    <th>Технология печати</th>
+    <th>Цвет</th>
+    <th>Совместимость</th>
+    <th>Ёмкость</th>
+    <th>Вес</th>
+    <th>Описание</th>
+    <th>Цена</th>
+    <th>Изображение</th>
+  </tr>
+
+<% @products.each do |product| %>
+  <!--<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+    <td><%= image_tag (product.image.url(:thumb)) %></td>    
+    <td><%= product.title %></td>
+    <td><%= product.producer %></td>
+    <td><%= product.model %></td>
+    <td><%= product.print_tech %></td>
+    <td><%= product.color %></td>
+    <td><%= product.compatibility %></td>
+    <td><%= product.capacity %></td>
+    <td><%= product.weight %></td>
+    <td class="list_description"><%= truncate(strip_tags(product.description),:length => 80) %></td>
+    <td><%= product.price %></td>
+    <td class="list_actions">   
+      <% if can? :show, Product %>      
+        <%= link_to 'Show', product %>
+      <% end %>
+      <% if can? :manage, Product %>      
+        <%= link_to 'Edit', edit_product_path(product) %>
+        <%= link_to 'Destroy', product, :confirm => 'Are you sure?', :method => :delete %>
+      <% end %>
+    </td>
+  </tr>-->
+<tr>
+<%= form_for(product, :html => { :multipart => true }) do |f| %>
+  <td class="field">
+    <br />
+    <%= f.text_field :category, :size => 15 %>
+  </td>
+  <td class="field">
+    <br />
+    <%= f.text_field :title, :size => 15 %>
+  </td>
+  <td class="field">
+    <br />
+    <%= f.text_field :producer, :size => 15 %>
+  </td>
+  <td class="field">
+    <br />
+    <%= f.text_field :model, :size => 15 %>
+  </td>
+  <td class="field">
+    <br />
+    <%= f.text_field :print_tech, :size => 15 %>
+  </td>
+  <td class="field">
+    <br />
+    <%= f.text_field :color, :size => 15 %>
+  </td>
+  <td class="field">
+    <br />
+    <%= f.text_field :compatibility, :size => 15 %>
+  </td>
+  <td class="field">
+    <br />
+    <%= f.text_field :capacity, :size => 15 %>
+  </td>
+  <td class="field">
+    <br />
+    <%= f.text_field :weight, :size => 15 %>
+  </td>
+  <td class="field">
+    <br />
+    <%= f.text_field :description, :size => 15 %>
+  </td>
+  <td class="field">
+    <br />
+    <%= f.text_field :price, :size => 15 %>
+  </td>
+  <td class="field">
+    <%= image_tag (product.image.url(:thumb)) %>
+    <%= f.file_field :image %>
+  </td>
+  <td class="actions">
+    <%= f.submit %>
+  </td>
+  <td class="list_actions">   
+      <% if can? :show, Product %>      
+        <%= link_to 'Show', product %>
+      <% end %>
+      <% if can? :manage, Product %>      
+        <%= link_to 'Edit', edit_product_path(product) %>
+        <%= link_to 'Destroy', product, :confirm => 'Are you sure?', :method => :delete %>
+      <% end %>
+    </td>
+<% end %>
+</tr>
+
+
+
+<% end %>
+</table>
+<br />
+
+<%= link_to 'New Product', new_product_path %>

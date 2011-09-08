@@ -1,0 +1,16 @@
+rails g scaffold Product title:string producer:string model:string print_tech:string color:string compatibility:string capacity:string weight:decimal description:text price:decimal
+
+
+Использую rails (3.0.3) и thinking-sphinx (2.0.5) для бд postgresql 8.3.9. Выкладываю на locum.ru
+Всё настроено, sphinx (0.9.9). 
+В модели Product создал функцию
+define_index do
+    indexes title
+    indexes producer
+    indexes model
+end
+Индексы созданы rake rs:index RAILS_ENV=production. 
+production.sphinx.conf создана в папке config. Пути все верно прописаны в нём. 
+Демон запускается и работает, rake ts:start RAILS_ENV=production.
+
+Но самое интересное при попытке поиска выдаёт сообщение 

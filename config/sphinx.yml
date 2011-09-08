@@ -1,0 +1,17 @@
+production:
+  port: 1388
+  address: 127.0.0.1
+  searchd_log_file: /var/www/home/hosting_svopart/projects/svopart/releases/svopart/log/searchd.log
+  query_log_file: /var/www/home/hosting_svopart/projects/svopart/releases/svopart/log/searchd.query.log
+  pid_file: /var/www/home/hosting_svopart/projects/svopart/releases/svopart/log/searchd.production.pid
+  searchd_file_path: /var/www/home/hosting_svopart/projects/svopart/releases/svopart/db/sphinx/production/
+  enable_star: true 
+  min_prefix_len: 0 
+  min_infix_len: 1 
+  min_word_len: 1 
+
+development:
+  enable_star: true 
+  min_prefix_len: 0 
+  min_infix_len: 1 
+  min_word_len: 1 

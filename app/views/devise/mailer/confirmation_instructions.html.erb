@@ -1,0 +1,84 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>svopart.ru - автоматическое уведомление</title>
+</head>
+<body leftmargin="0" topmargin="0" marginheight="0" marginwidth="0" bgcolor="#FFFFFF" link="#0066ff" vlink="#551A8B">
+    <center>
+        <table border="0" cellspacing="0" cellpadding="0" height="100%">
+            <tbody><tr>
+                <td width="15" bgcolor="#FFFFFF"></td>
+                <td bgcolor="#FFFFFF">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody><tr>
+                            <td align="left">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tbody><tr>
+                                        <td >
+                                            <a href="http://www.avito.ru/" target="_blank"><img src="./Svopart.ru - автоматическое уведомление_files/logo-mail.gif" alt="AVITO.ru" border="0"></a>
+                                        </td>
+                                        <td >
+                                            &nbsp;&nbsp;<font size="4" face="Tahoma" color="#4f3636">Здраствуйте, <%= @resource.username %>!</font><br>
+                                        </td>
+                                        <td></td>
+                                     </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td style="padding-left:10px">
+                                          
+                                            
+    <p><font color="#444f58" size="2" face="Tahoma">Вы получили это письмо, потому что Ваш адрес электронной почты был указан
+при регистрации на сайте <a href="http://www.svopart.ru/">Svopart.ru</a>.</font></p>
+    <ul>
+      <li><font color="#444f58" size="2" face="Tahoma">Ваш адрес электронной почты: <%= @resource.email %></font></li>
+      
+  </ul>
+    <%= link_to 'Подтвердите свою регистрацию перейдя по ссылке', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token), :style => "color:#444f58 size:2;face:Tahoma;"%>
+   
+    
+
+
+<p><font color="#444f58" size="2" face="Tahoma"> Если Вы не регистрировались на этом сайте, пожалуйста, проигнорируйте это письмо или <%= link_to "сообщите администрации", 'mailto:direktor@svopart.ru' %>.</font></p>
+<p><font face="Tahoma" size="2" color="#444f58">При  возникновении вопросов или предложений, а так же появлении жалоб на работу Интернет магазина СВОПАРТ и его сотрудников напишите электронное письмо </font><font color="#808080" size="2" face="Tahoma"><%= link_to "direktor@svopart.ru", 'mailto:direktor@svopart.ru' %></font><font face="Tahoma" size="2" color="#444f58">, либо позвоните по телефону:</font> <font face="Tahoma" size="2" color="#444f58">8 (926) 012-56-12.</font></p></td>
+                                        <td></td>
+                                     </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <!-- grey line -->
+                                            <table  border="0" align="center" cellpadding="0" cellspacing="0">
+                                                <tbody><tr height="10"><td colspan="7">&nbsp;</td></tr>
+                                                <tr><td height="1" bgcolor="#eaeaea" ></td><td width="20"></td></tr>
+                                                <tr height="10"><td colspan="7">&nbsp;</td></tr>
+                                            </tbody></table>
+                                            <!-- /grey line -->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td align="left">
+                                                                                        <p style="padding-left:10px;" align="left">
+                                                <font color="#808080" size="2" face="Tahoma">
+                                                    С благодарностью за регистрацию,<br>
+                                          Интернет-магазин СВОПАРТ<br />
+                                          8 (926) 012-56-12</font><font color="#808080" size="2" face="Tahoma"><br>
+                              <a href="mailto:support@avito.ru" target="_blank">info@svopart.ru</a>
+                          </font> </p></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody></table>
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </td>
+                <td width="15" bgcolor="#FFFFFF"></td>
+            </tr>
+        </tbody></table>
+    </center>
+
+
+
+
+</body></html>

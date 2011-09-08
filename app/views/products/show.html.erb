@@ -1,0 +1,56 @@
+<p>
+<%= image_tag (@product.image.url(:thumb)) %>
+</p>
+<p>
+  <b>Title:</b>
+  <%= @product.title %>
+</p>
+
+<p>
+  <b>Producer:</b>
+  <%= @product.producer %>
+</p>
+
+<p>
+  <b>Model:</b>
+  <%= @product.model %>
+</p>
+
+<p>
+  <b>Print tech:</b>
+  <%= @product.print_tech %>
+</p>
+
+<p>
+  <b>Color:</b>
+  <%= @product.color %>
+</p>
+
+<p>
+  <b>Compatibility:</b>
+  <%= @product.compatibility %>
+</p>
+
+<p>
+  <b>Capacity:</b>
+  <%= @product.capacity %>
+</p>
+
+<p>
+  <b>Weight:</b>
+  <%= @product.weight %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @product.description %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%= @product.price %>
+</p>
+
+
+<%= link_to 'Edit', edit_product_path(@product) %> |
+<%= link_to 'Back', products_path %>

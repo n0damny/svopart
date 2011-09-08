@@ -1,0 +1,41 @@
+<% if cart.line_items.empty? %>
+  <table>
+
+    <tr class="total_line" >
+      <td colspan="2">позиций:</td>
+      <td class="total_cell" >0</td>
+    </tr>
+    <tr class="total_line" >
+      <td colspan="2">количество:</td>
+      <td class="total_cell" >0</td>
+    </tr>  
+
+    <tr class="total_line" >
+      <td colspan="2">сумма:</td>
+      <td class="total_cell" ><%= number_to_currency(0) %></td>
+    </tr>
+  </table>
+
+  <%= button_to '', store_view_cart_path, :method => :get, :class => "button shadow" %>
+<% else %>
+  <table>
+
+    <tr class="total_line" >
+      <td colspan="2" >позиций:</td>
+      <td class="total_cell" ><%= cart.total_products %></td>
+    </tr>
+    <tr class="total_line" >
+      <td colspan="2" >количество:</td>
+      <td class="total_cell" ><%= cart.total_items %></td>
+    </tr>  
+
+    <tr class="total_line" >
+      <td colspan="2" >сумма:</td>
+      <td class="total_cell" ><%= number_to_currency(cart.total_price) %></td>
+    </tr>
+  </table>
+  
+    <%= button_to '', store_view_cart_path, :method => :get, :class => "button shadow" %>
+    <%= button_to '', @cart, :method => :delete, :title => "Очистить корзину", :confirm => 'Уверены, что хотите очистить корзину?',
+      :class => "del_button" %>
+<% end %>

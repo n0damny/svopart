@@ -1,0 +1,23 @@
+<% @cart = Cart.find(session[:cart_id]) %>
+<% if !@cart %>
+  <% @cart = Cart.create %>
+  <% session[:cart_id] = @cart.id %>
+<% end %>
+<div class = "spec_offer">
+  <div id="spec_offer_title">
+    <p>забыли свой пароль?</p>
+  </div>
+
+  <div id = "user_enters">
+    <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+      <%= devise_error_messages! %>
+
+      <p><%= f.label :email, "email:" %><br />
+      <%= f.email_field :email %></p>
+
+      <p><%= f.submit '', :class => 'passw_button shadow' %></p>
+    <% end %>
+
+    <%= render :partial => "devise/shared/links" %>
+  </div>
+</div>

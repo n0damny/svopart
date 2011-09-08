@@ -1,0 +1,92 @@
+
+        <table  border="0" cellspacing="0" cellpadding="0" height="100%">
+            <tbody><tr>
+                <td width="15" bgcolor="#FFFFFF"></td>
+                <td bgcolor="#FFFFFF">
+                    <table border="0" cellspacing="0" cellpadding="0">
+                        <tbody><tr>
+                            <td align="left">
+                                <table border="0" cellspacing="0" cellpadding="0">
+                                    <tbody><tr>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            &nbsp;&nbsp;<font size="4" face="Tahoma" color="#4f3636">Здравствуйте, <%= @order.name %>!</font><br>
+                                        </td>
+                                        <td></td>
+                                     </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td style="padding-left:10px">
+                                          <font face="Tahoma" size="2" color="#444f58">
+                                            
+    <p>Вы получили это письмо, потому что Ваш адрес электронной почты был указан
+при оформлении заказа на сайте <a href="http://www.svopart.ru/">Svopart.ru</a></p>
+
+
+<p>Вашему заказу присвоен №<%= @order.order_num %>, он успешно сформирован и отправлен в обработку менеджерам <a href="http://www.svopart.ru/">Интернет-магазина СВОПАРТ</a>. В ближайшее время с Вами свяжутся для подтверждения введённой информации и согласования условий доставки. </p>
+</font>
+                                          <p><font color="#444f58" size="2" face="Tahoma">Заказ <a href="http://www.svopart.ru/">№<%= @order.order_num %></a> включает следующие товары и услуги:</font></p>
+<table>                                          
+<%= render @order.line_items %>
+</table>                                          
+  <p><font face="Tahoma" size="2" color="#444f58">Для редактирования и отмены заказа используйте следующие контакты:</font> <font face="Tahoma" size="2" color="#444f58">8 (926) 012-56-12, <%= link_to "info@svopart.ru", 'mailto:info@svopart.ru' %> </font></p>
+
+<% if !@order.user_id %>   
+  <font face="Tahoma" size="2" color="#444f58">
+  <p>
+    Рекомендуем Вам
+    <a href="http://www.svopart.ru/registration">зарегистрироваться</a>.
+    После регистрации Вы получите следующие преимущества:
+  </p>
+  </font><ul>
+    <li><font color="#444f58" size="2" face="Tahoma">
+      Оформление заказа
+      займет меньше времени — не нужно будет каждый раз
+      заполнять контактную информацию</font></li>
+    <li><font color="#444f58" size="2" face="Tahoma">Появится возможность добавлять товар в закладки  — отпадёт необходимость поиска нужного товара</font></li>
+    <li><font color="#444f58" size="2" face="Tahoma">
+      Сохраниться история совершённых заказов  — станет возможным просмотр   ранее совершённых заказов</font></li>
+    <li><font color="#444f58" size="2" face="Tahoma">
+      Только зарегистрированный пользователь может получать информацию о специальных предложениях Интернет-магазина СВОПАРТ.
+      </font></li>
+    
+  </ul>
+<% end %>
+
+
+
+                                          
+                                      </td>
+                                        <td></td>
+                                     </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <!-- grey line -->
+                                            <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+                                                <tbody><tr height="10"><td colspan="7">&nbsp;</td></tr>
+                                                <tr><td height="1" bgcolor="#eaeaea" ></td><td width="20"></td></tr>
+                                                <tr height="10"><td colspan="7">&nbsp;</td></tr>
+                                            </tbody></table>
+                                            <!-- /grey line -->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td align="left">
+                                                                                        <p style="padding-left:10px;" align="left"><font color="#808080" size="2" face="Tahoma">С наилучшими пожеланиями,<br />
+Интернет-магазин СВОПАРТ<br />
+8 (926) 012-56-12</font><font color="#808080" size="2" face="Tahoma"><br />
+<a href="mailto:support@avito.ru" target="_blank">info@svopart.ru</a></font></p></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody></table>
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </td>
+                <td width="15" bgcolor="#FFFFFF"></td>
+            </tr>
+        </tbody></table>
+

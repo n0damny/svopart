@@ -1,0 +1,75 @@
+<script>
+$(document).ready(function(){
+	$(".orderajax").colorbox();
+});
+</script>
+
+<div class = "spec_offer">
+  <div id="spec_offer_title">
+    <p>ваши заказы, <%= current_user.username %>:</p>
+  </div>
+  <div id = "profile">
+
+  <% if @orders && @orders.length > 0 %>
+    <table>
+
+      <thead>
+        <th>Номер заказа</th>
+        <th class = "bleft">Дата и время заказа</th>
+        <th class = "bleft">Плательщик</th>
+        <th class = "bleft">Сумма</th>
+        <th class = "bleft">Статус</th>
+        <th class = "bleft">Действия</th>
+      </thead>
+      <tr><td colspan = 6 class = "bbottom"></td></tr>
+    <% @orders.each_with_index do |order, i| %>
+      <% if i > 0 %>
+        <tr><td colspan = 6 class = "bbottom"></td></tr>
+      <% end %>
+      <tr>
+        <td>
+          <%= link_to order.order_num, order %>
+        </td>
+        <td class = "bleft">
+          <%= order.created_at.strftime("%d.%m.%Y %H:%M") %>
+        </td>
+        <td class = "bleft">
+          <%= order.name %>
+        </td>
+        <td class = "bleft">
+          <%= number_to_currency(order.line_items.to_a.sum { |item| item.total_price }) %>    
+        </td>
+        <td class = "bleft" 
+          <% if order.status == 'в обработке' %>
+            style = "color:grey;"
+          <% elsif order.status == 'в доставке' %>
+            style = "color:orange;"
+          <% elsif order.status == 'выполнен' %>
+            style = "color:green;"
+          <% elsif order.status == 'отменен' %>
+            style = "color:red;"
+          <% end %>
+          >
+          <%= order.status.mb_chars.capitalize.to_s %>          
+        </td>
+        <td class = "bleft">  
+          <% if order.status == "в обработке" %>
+            <%= link_to  "изменить", "#" %>
+          <% end %>
+          <% if order.status != "отменен" %>
+            <%= link_to  "отменить", "#" %>
+          <% end %>
+          <% if current_user %>
+            <%= link_to 'запомнить', templates_path(:order_id => order), :method => :create, :title => "добавить в шаблон" %>
+          <% end %>            
+            <%= link_to  "повторить", orders_path(:order_id => order.id), :method => :create, :title => "повторить заказ" %>
+        </td>
+      </tr>
+      
+    <% end %>
+    </table>
+  <% else %>
+    <p>Вы ещё не сделали ни одного заказа</p>
+  <% end %>
+  </div>
+</div>

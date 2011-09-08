@@ -1,0 +1,60 @@
+
+    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+
+    <% if resource.errors.any? %>
+        <script type="text/javascript">
+          $.gritter.add({
+         	  // (string | обязательно) заголовок сообщения
+         	  title: 'нельзя создать такого пользователя:',
+            // (string | обязательно) текст сообщения
+        	  text: '<% resource.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %>',
+            time: '6000'
+          });
+        </script>
+      <% end -%>
+      <!--<%= devise_error_messages! %>-->
+
+      <p><%= f.label :username, "имя пользователя:" %><br />
+      <%= f.text_field :username %></p>
+
+      <p><%= f.label :email, "email:" %><br />
+      <%= f.email_field :email %></p>
+
+      <p><%= f.label :password, "пароль:" %><br />
+      <%= f.password_field :password %></p>
+
+      <p><%= f.label :password_confirmation, "подтверждение пароля:" %><br />
+      <%= f.password_field :password_confirmation %></p>
+  
+      <p><%= f.label :dbirth, "день рождения:" %><br />
+      <%= f.text_field :dbirth %></p>
+
+      <p><%= f.label :firstname, "фио:" %><br />
+      <%= f.text_field :firstname %></p>
+
+      <p><%= f.label :city, "город:" %><br />
+      <%= f.text_field :city %></p>
+
+      <p><%= f.label :address1, "адрес 1:" %><br />
+      <%= f.text_area :address1, :rows => 6 %></p>
+
+      <p><%= f.label :metro1, "ближайшее метро:" %><br />
+      <%= f.text_field :metro1 %></p>
+
+      <p><%= f.label :address2, "адрес 2:" %><br />
+      <%= f.text_area :address2, :rows => 6 %></p>
+
+      <p><%= f.label :metro2, "ближайшее метро:" %><br />
+      <%= f.text_field :metro2 %></p>
+
+      <p><%= f.label :accnt, "номер лицевого счета:" %><br />
+      <%= f.text_field :accnt %></p>
+
+      <%= f.hidden_field :role, :value => 'client' %>      
+      <!--<p><%= f.label :role %><br />
+      <%= f.collection_select :role, User::ROLES, :to_s, :humanize %></p>-->
+
+      <p><%= f.submit '', :class => "reg_button shadow" %></p>
+    <% end %>
+
+    <%= render :partial => "devise/shared/links" %>
