@@ -29,6 +29,7 @@ gem 'paperclip', :git => 'git://github.com/thoughtbot/paperclip.git'
 gem 'thinking-sphinx', :branch  => 'rails3', :require => 'thinking_sphinx'
 gem 'devise'
 gem "cancan"
+gem 'spreadsheet'
 # gem 'gritter_notices'
 
 # Bundle gems for the local environment. Make sure to

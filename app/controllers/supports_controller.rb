@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class SupportsController < ApplicationController
   def new
     @cart = current_cart

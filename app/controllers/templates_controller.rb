@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class TemplatesController < ApplicationController
   # GET /templates
   # GET /templates.xml

@@ -1,20 +1,16 @@
 
 <tr class = "cart_item" align = "center">
-  <td><%= link_to image_tag (line_item.product.image.url(:thumb)), store_about_product_path(:id => line_item.product.id) %></td>
+  <td><%= link_to image_tag(line_item.product.image.url(:thumb)), store_about_product_path(:id => line_item.product.id) %></td>
   <td class = "bleft" align = "left"><%= link_to line_item.product.title, store_about_product_path(:id => line_item.product.id) %></td>
   <td class="item_price bleft" ><%= number_to_currency(line_item.product.price) %></td>
   <td class = "bleft">
     <% if line_item.order_id %>
       &times; <%= line_item.quantity %>
     <% else %>
-      <%= form_for(line_item) do |f| %>
-      <div class="field">
-        &times; <%= f.number_field :quantity, :min => 1, :size => 1 %>
-      </div>
-      <div class="actions">
-        <%= f.submit 'изменить' %>
-      </div>
-      <% end %>
+    <b><%= link_to '—', change_quantity_line_item_path(:id => line_item, :quantity => line_item.quantity - 1), :remote => true, :title => "минус один" %></b>
+     <%= line_item.quantity %>
+    <b><%= link_to '+', change_quantity_line_item_path(:id => line_item, :quantity => line_item.quantity + 1), :remote => true, :title => "плюс один" %></b>
+    
     <% end %>
   </td>
   <td class="item_price bleft" ><%= number_to_currency(line_item.total_price) %></td>

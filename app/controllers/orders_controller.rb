@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class OrdersController < ApplicationController
   load_resource :except => [:index, :user_order_line_items, :order_print]
   authorize_resource :except => [:user_order_line_items]
@@ -61,13 +62,13 @@ class OrdersController < ApplicationController
     if params[:order_id]
       #@order_old = Order.find(params[:order_id])
       @order = @order.duplicate(params[:order_id])
-      @order.order_num = Time.now.strftime("%y%m%d").to_s + Order.find_by_sql("select (count(*) + 1) as cn from orders o where to_char(o.created_at,'yyyy-mm-dd') = to_char(current_date,'yyyy-mm-dd')").first.cn.to_s
+      @order.order_num = Time.now.strftime("%y%m%d").to_s + Order.find_by_sql("select (count(*) + 1) as cn from orders o where to_char(o.created_at,'yyyy-mm-dd') = to_char(current_date,'yyyy-mm-dd')").first.cn.to_s.rjust(3, '0')
     else
       if params[:order][:deliv_type] == 'самовывоз'
         @order.address = 'none'
       end
       #@order = Order.new(params[:order])
-      @order.order_num = Time.now.strftime("%y%m%d").to_s + Order.find_by_sql("select (count(*) + 1) as cn from orders o where to_char(o.created_at,'yyyy-mm-dd') = to_char(current_date,'yyyy-mm-dd')").first.cn.to_s
+      @order.order_num = Time.now.strftime("%y%m%d").to_s + Order.find_by_sql("select (count(*) + 1) as cn from orders o where to_char(o.created_at,'yyyy-mm-dd') = to_char(current_date,'yyyy-mm-dd')").first.cn.to_s.rjust(3, '0')
       @order.add_line_items_from_cart(current_cart)
     end
     respond_to do |format|
@@ -75,6 +76,7 @@ class OrdersController < ApplicationController
         Cart.destroy(session[:cart_id]) 
         session[:cart_id] = nil
         Notifier.order_received(@order).deliver
+        Noteadmin.order_received_adm(@order).deliver
         format.html { redirect_to(root_path, :notice =>'Благодарим за ваш заказ. Оператор свяжется с вами для подтверждения деталей.') }
         format.xml  { render :xml => @order, :status => :created, :location => @order }
       else

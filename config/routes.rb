@@ -10,7 +10,11 @@ Svopart::Application.routes.draw do
   		end
   end
 
-  resources :line_items
+  resources :line_items do
+      member do
+  			get :change_quantity
+  		end
+  end
 
   resources :templates
 
@@ -42,9 +46,11 @@ Svopart::Application.routes.draw do
   get "store/advanced_search"
 
   get "store/users"
-
+  post "products/file_upload"
+#resources :excel_file_upload, :module => "products"
   resources :products do
     get :who_bought, :on => :member
+    post :file_upload
   end
   
   root :to => 'store#index'

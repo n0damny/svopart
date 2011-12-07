@@ -34,9 +34,9 @@
         <div>
           <p>Каталог</p>
           <ul>
-            <% Product.find_by_sql("SELECT DISTINCT category, producer FROM Products order by producer").each do |prod| %>
-              <%= link_to store_akafilt_path(:producer => prod.producer, :category =>prod.category) do %>
-                <li>› <%= prod.category.mb_chars.capitalize.to_s %> <%= prod.producer %></li>
+            <% Product.find_by_sql("SELECT DISTINCT producer FROM Products order by producer").each do |prod| %>
+              <%= link_to store_akafilt_path(:producer =>prod.producer) do %>
+                <li>› <%= prod.producer %></li>
               <% end %>
             <% end %>
             <li></li>
@@ -105,7 +105,7 @@
         <div  class = "contacts_on_bar">
           <p>Контакты</p>
           <div>
-            <%= image_tag "wqe/clock.jpg" %>
+            <%= image_tag "wqe/contact.png" %>
             <h3>Мы на связи!</h3>
             <ul>
               <li>+7 (926) <span style = "font-size:1.3em;color:red;">012-56-12</span></li>

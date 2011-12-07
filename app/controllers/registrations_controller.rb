@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class RegistrationsController < Devise::RegistrationsController
 
 # GET /resource/sign_up

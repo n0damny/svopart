@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class StoreController < ApplicationController
   def index
     @products1 = Product.limit(3)
@@ -32,10 +33,10 @@ class StoreController < ApplicationController
     elsif(params[:search] and params[:search].length > 0)
       @products = Product.search ('*'+params[:search]+'*')
     elsif(params[:producer] and
-          params[:category] and 
-          params[:producer].length > 0 and
-          params[:category].length > 0)
-      @products = Product.find_all_by_producer_and_category(params[:producer], params[:category])
+          #params[:category] and 
+          params[:producer].length > 0)# and
+          #params[:category].length > 0)
+      @products = Product.find_all_by_producer(params[:producer])
     end
     @cart = current_cart
   end
@@ -87,6 +88,8 @@ class StoreController < ApplicationController
     render :layout => 'layouts/order_print'
 
   end
+
+
 
   def my_templates
     @cart = current_cart

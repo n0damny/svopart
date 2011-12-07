@@ -1,0 +1,80 @@
+
+<div class = "spec_offer">
+  <div id="spec_offer_title">
+    <% if(params[:title] and 
+          params[:producer] and
+          params[:model] and
+          params[:print_tech] and
+          params[:color] and
+          params[:compatibility] and
+          (params[:title].length > 0 or
+            params[:producer].length > 0 or
+            params[:model].length > 0 or
+            params[:print_tech][:print_tech].length > 0 or
+            params[:color][:color].length > 0 or
+            params[:compatibility].length > 0)) %>
+      <p>расширенный поиск</p>
+    <% elsif params[:search] and params[:search].length > 0 %>
+      <p>вы искали "<%= params[:search] %>"</p>
+    <% elsif params[:producer] and
+          params[:category] and 
+          params[:producer].length > 0 and
+          params[:category].length > 0 %>
+    <p><%= params[:category] %> <%= params[:producer] %></p>
+    <% else %>
+      <p>wtf</p>
+    <% end %>
+  </div>
+  <% if(params[:title] and 
+          params[:producer] and
+          params[:model] and
+          params[:print_tech][:print_tech] and
+          params[:color][:color] and
+          params[:compatibility] and
+          (params[:title].length > 0 or
+            params[:producer].length > 0 or
+            params[:model].length > 0 or
+            params[:print_tech][:print_tech].length > 0 or
+            params[:color][:color].length > 0 or
+            params[:compatibility].length > 0)) %>
+      <p>Вы искали по следующим полям:</p>
+      <p><%= params[:title].length > 0 ? "Название: #{params[:title]}" : "" %></p>
+      <p><%= params[:producer].length > 0 ? "Производитель: #{params[:producer]}" : "" %></p>
+      <p><%= params[:model].length > 0 ? "Модель: #{params[:model]}" : "" %></p>
+      <p><%= params[:print_tech][:print_tech].length > 0 ? "Технология печати: #{params[:print_tech][:print_tech]}" : "" %></p>
+      <p><%= params[:color][:color].length > 0 ? "Цвет: #{params[:color][:color]}" : "" %></p>
+      <p><%= params[:compatibility].length > 0 ? "Совместимость: #{params[:compatibility]}" : "" %></p>
+  <% end %>
+  <table class = "filt" cellspacing = "5px">
+    <% if @products and @products.length > 0 %>
+      <% @products.each_with_index do |product, i| %>
+        <% if i%5 == 0 %>
+          <% if i > 0%>
+            <tr class = "intable"><td colspan = 5 ></td></tr>
+          <% end %>
+          <tr>
+        <% end %>     
+          <td <% if (i+1)%5 == 0 %> class = "fiveth"<% end %> >      
+
+            <%= link_to store_about_product_path(:id => product.id) do %>
+                <p><%= product.producer %></p><p><%= product.model.truncate(16) %></p>
+            <% end %>
+            <div class = "img_prod">
+		
+              <%= link_to image_tag(product.image.url(:thumb)), store_about_product_path(:id => product.id) %>
+		
+            </div>
+            <%= button_to '', line_items_path(:product_id => product), :remote => true, :class => "add_to_cart" %>
+            <span><%= number_to_currency(product.price, :precision => 0) %></span>
+          </td>
+        <% if (i+1)%5 == 0 %>
+          </tr>
+        <% end %>
+      <% end %>
+    <% else %>
+      
+        <p class = "none_products">К сожалению, на текущий момент, товары, удовлетворяющие вашему запросу, в нашем магазине отсутствуют.</p>
+      
+    <% end %>
+  </table>
+</div>

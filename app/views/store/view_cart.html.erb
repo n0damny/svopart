@@ -2,46 +2,8 @@
   <div id="spec_offer_title">
     <p>корзина</p>
   </div>
-
-
-<% if @cart.line_items.empty? %>
-  <table class = "view_cart">
-    <tr class="total_line" >
-      <td colspan="4" style = "border:none;" >Ваша корзина пуста. Вы можете добавить в неё товары из нашего каталога</td>
-
-    </tr>
-  
-  </table>
-<% else %>
-  <table class = "view_cart">
-    
-    <tr align = "center">
-      <th>Фото</th>
-      <th class = "bleft">Наименование</th>      
-      <th class = "bleft">Цена</th>
-      <th class = "bleft">Количество</th>
-      <th class = "bleft">Стоимость</th>
-      <th class = "bleft"></th>
-    </tr>
-    <tr><td colspan = 6 class = "bbottom"></td></tr>
-    <%= render(@cart.line_items) %>
-    <tr class="total_line" >
-      <td colspan="4" align = "right" >Итого:</td>
-      <td colspan="2" class="total_cell bleft" ><b><%= number_to_currency(@cart.total_price) %></b></td>
-    </tr>
-  
-
-    <tr>
-      <td colspan="4" align = "right">
-        <%= button_to '', @cart, :method => :delete, :title => "Очистить корзину", :confirm => 'Уверены, что хотите очистить корзину?',
-          :class => "del_button_big" %>
-
-      </td>
-      <td colspan="1" align = "center">
-        <%= button_to "", new_order_path, :method => :get, :class => 'checkout_button shadow' %>
-      </td>
-    </tr>
-  </table>
-<% end %>
+<div  id = "vcart">
+ <%= render 'store/vcart' %>
+</div>
 
 </div>

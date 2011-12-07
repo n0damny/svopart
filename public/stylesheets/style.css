@@ -842,7 +842,7 @@ width:150px;
 }
 .logcart_bar .cart_wrap {
   float:left;
-  width:180px;
+  width:170px;
 }
 .cart_wrap {
   padding-top:25px;
@@ -855,7 +855,7 @@ width:150px;
 }
 .logcart_bar .contacts_on_bar {
   float:left;
-  width:210px;
+  width:220px;
 }
 .contacts_on_bar img{
   margin:15px 25px 0 0;
@@ -868,6 +868,7 @@ width:150px;
 }
 .contacts_on_bar ul li{
   margin-top:7px;
+  margin-left:11px;
 }
 .contacts_on_bar h3{
   margin:10px 0 15px 15px;

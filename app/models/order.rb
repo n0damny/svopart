@@ -1,4 +1,6 @@
-class Order < ActiveRecord::Base
+# -*- coding: utf-8 -*-
+
+class Order < ActiveRecord::Base 
   PAYMENT_TYPES = [ "Наличный расчёт", "Безналичный расчёт" ]
   STATUS_TYPES = [ "в обработке", "в доставке" , "выполнен", "отменён"]
   validates :name, :address, :email, :pay_type, :order_num, :status, :phone, :presence => true

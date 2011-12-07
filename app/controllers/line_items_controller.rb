@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class LineItemsController < ApplicationController
   
   authorize_resource :only => :index
@@ -11,6 +12,30 @@ class LineItemsController < ApplicationController
       format.xml  { render :xml => @line_items }
     end
   end
+
+def change_quantity
+  @cart = current_cart
+  @line_item = LineItem.find(params[:id])
+  if  params[:quantity].to_i > 0
+    @line_item.quantity = params[:quantity]
+    if !@line_item.save
+            format.html { redirect_to root_path }
+            format.xml  { render :xml => @line_item.errors,
+            :status => :unprocessable_entity }
+    else
+      respond_to do |format|
+        format.html { render :layout=>false }     
+        format.js
+      end
+    end
+  else
+    @line_item.destroy
+    respond_to do |format|
+        format.html { render :layout=>false }     
+        format.js
+    end
+  end
+end
 
   # GET /line_items/1
   # GET /line_items/1.xml
@@ -76,15 +101,22 @@ class LineItemsController < ApplicationController
   # PUT /line_items/1
   # PUT /line_items/1.xml
   def update
-    @line_item = LineItem.find(params[:id])
-
+#raise "SomeError message ..." 
+    if (params[:id] and params[:quantity])
+      @line_item = LineItem.find(params[:id])
+      @line_item.quantity = params[:quantity]
+    else
+      @line_item = LineItem.find(params[:id])
+    end
     respond_to do |format|
       if @line_item.update_attributes(params[:line_item])
         #'Line item was successfully updated.'
         format.html { redirect_to(store_view_cart_path, :notice => 'Позиция была успешно изменена.') }
+        format.js {render :layout=>false}  
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
+        format.js {render :layout=>false}  
         format.xml  { render :xml => @line_item.errors, :status => :unprocessable_entity }
       end
     end

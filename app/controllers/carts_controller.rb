@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class CartsController < ApplicationController
   load_resource :except => :destroy #:only => :index 
   authorize_resource :except => :destroy

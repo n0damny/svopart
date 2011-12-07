@@ -1,0 +1,49 @@
+<div class = "spec_offer">
+  <div id="spec_offer_title">
+    <p><%= @product.title %></p>
+  </div>
+  <table class = "about_product">
+    <tr>
+      <td rowspan = 6 colspan = 3 class = "nonebord">
+        
+      </td>
+      <td class = "headt">Производитель:</td>
+      <td><%= @product.producer %></td>
+    </tr>
+    <tr>
+      <td class = "headt">Модель:</td>
+      <td><%= @product.model %></td>
+    </tr>
+    <tr>
+      <td class = "headt">Технология печати:</td>
+      <td><%= @product.print_tech.mb_chars.capitalize.to_s %></td>
+    </tr>
+    <tr>
+      <td class = "headt">Цвет:</td>
+      <td><%= @product.color.mb_chars.capitalize.to_s %></td>
+    </tr>
+    <tr>
+      <td class = "headt">Совместим с:</td>
+      <td><%= @product.compatibility %></td>
+    </tr>
+    <tr>
+      <td class = "headt">Ёмкость:</td>
+      <td><%= @product.capacity.mb_chars.capitalize.to_s %></td>
+    </tr>
+    <tr>
+      <td class = "headt nonebord">Цена:</td>
+      <td class = "nonebord" align = "center" style = "color:#ffa200;font-size:16px;width:85px;"><b><%= number_to_currency(@product.price, :precision => 0) %></b></td>
+      <td class = "nonebord"><%= button_to '', line_items_path(:product_id => @product), :remote => true, :class => "add_to_cart_big", :title => "Добавить в корзину" %>
+      </td>      
+      <td class = "headt nonebord">Вес:</td>
+      <td class = "nonebord"><%= @product.weight %></td>
+    </tr>
+    <tr >
+      <td class = "nonebord" colspan = 5 style = "padding:10px 0 5px 0;"><%=sanitize @product.description %></td>  
+    </tr>
+    <tr>
+      
+    </tr>
+  
+</table>
+</div>

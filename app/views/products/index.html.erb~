@@ -1,0 +1,211 @@
+<script>
+  
+</script>
+
+<h1>Список товаров</h1>
+
+
+<p>Загрузить файл с данными о продуктах строго по формату</p>
+<%= form_for :excel_file_upload, :html => {:multipart => true}, :method => "post" do |f| %>
+  <p><%= f.file_field :excel_file %></p>
+
+  <p><%= f.select :replace, options_for_select([["Заменить весь каталог", 1],["Добавить в каталог", 2]]), :cols => 40 %></p>
+  <p><%= f.submit('file_down') %></p>
+<% end %>
+
+
+
+
+
+
+<p id = "show_fields_0">развернуть</p>
+<table>
+  <tr>
+    <th>Изображение</th>
+    <th class="hyper_advance">Категория</th>
+    <th>Название</th>
+    <th class="hyper_advance">Производитель</th>
+    <th class="hyper_advance">Модель</th>
+    <th class="hyper_advance">Технология печати</th>
+    <th class="hyper_advance">Цвет</th>
+    <th class="hyper_advance">Совместимость</th>
+    <th class="hyper_advance">Ёмкость</th>
+    <th class="hyper_advance">Вес</th>
+    <th class="hyper_advance">Описание</th>
+    <th class="hyper_advance">Цена</th>
+  </tr>
+
+<% @products.each_with_index do |product, i| %>
+  <!--<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+    <td><%= image_tag (product.image.url(:thumb)) %></td>    
+    <td><%= product.title %></td>
+    <td><%= product.producer %></td>
+    <td><%= product.model %></td>
+    <td><%= product.print_tech %></td>
+    <td><%= product.color %></td>
+    <td><%= product.compatibility %></td>
+    <td><%= product.capacity %></td>
+    <td><%= product.weight %></td>
+    <td class="list_description"><%= truncate(strip_tags(product.description),:length => 80) %></td>
+    <td><%= product.price %></td>
+    <td class="list_actions">   
+      <% if can? :show, Product %>      
+        <%= link_to 'Show', product %>
+      <% end %>
+      <% if can? :manage, Product %>      
+        <%= link_to 'Edit', edit_product_path(product) %>
+        <%= link_to 'Destroy', product, :confirm => 'Are you sure?', :method => :delete %>
+      <% end %>
+    </td>
+  </tr>-->
+
+
+<tr>
+<%= form_for(product, :html => { :multipart => true }) do |f| %>
+  <tr>  
+  <td class="field_<%= i %>">
+    <%= image_tag (product.image.url(:thumb)) %>
+    <%= f.file_field :image %>
+  </td>
+  <td class="field_<%= i %>">
+    <br />
+    <%= f.text_field :title, :size => 15 %>
+  </td>
+  </tr>
+  <tr><td id = "show_fields_<%= i %>">развернуть</td></tr>
+  <div  id="field_advance_<%= i %>">
+  <tr>
+  <td class="field_advance_<%= i %>">
+    <br />
+    <%= f.text_field :category, :size => 15 %>
+  </td>
+  <td class="field_advance_<%= i %>">
+    <br />
+    <%= f.text_field :producer, :size => 15 %>
+  </td>
+  </tr>
+  <tr>
+  <td class="field_advance_<%= i %>">
+    <br />
+    <%= f.text_field :model, :size => 15 %>
+  </td>
+  <td class="field_advance_<%= i %>">
+    <br />
+    <%= f.text_field :print_tech, :size => 15 %>
+  </td>
+  </tr>
+  <tr>
+  <td class="field_advance_<%= i %>">
+    <br />
+    <%= f.text_field :color, :size => 15 %>
+  </td>
+  <td class="field_advance_<%= i %>">
+    <br />
+    <%= f.text_field :compatibility, :size => 15 %>
+  </td>
+  </tr>
+  <tr>
+  <td class="field_advance_<%= i %>">
+    <br />
+    <%= f.text_field :capacity, :size => 15 %>
+  </td>
+  <td class="field_advance_<%= i %>">
+    <br />
+    <%= f.text_field :weight, :size => 15 %>
+  </td>
+  </tr>
+  <tr>
+  <td class="field_advance_<%= i %>">
+    <br />
+    <%= f.text_field :description, :size => 15 %>
+  </td>
+  <td class="field_advance_<%= i %>">
+    <br />
+    <%= f.text_field :price, :size => 15 %>
+  </td>
+  </tr>
+  </div>
+  <tr><td id = "hide_fields_<%= i %>">свернуть</td></tr>
+  <tr>
+  <td class="actions">
+    <%= f.submit %>
+  </td>
+  <td class="list_actions">   
+      <% if can? :show, Product %>      
+        <%= link_to 'Show', product %>
+      <% end %>
+      <% if can? :manage, Product %>      
+        <%= link_to 'Edit', edit_product_path(product) %>
+        <%= link_to 'Destroy', product, :confirm => 'Are you sure?', :method => :delete %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>
+</tr>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  
+  $("#show_fields_<%= i %>").click(function(){
+    $("#show_fields_<%= i %>").hide(slow);
+    $("#field_advance_<%= i %>").slideDown('slow');$(".hyper_advance").slideUp('slow');
+    $("#hide_fields_<%= i %>").slideDown('slow')();
+  });
+  $("#field_advance_<%= i %>").hide();
+  $("#hide_fields_<%= i %>").hide();
+  $(".hyper_advance").hide();
+
+});
+</script>
+
+<% end %>
+</table>
+<%= will_paginate @products, :renderer => 'RemoteLinkRenderer' %>
+<br />
+
+<%= link_to 'New Product', new_product_path %>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+        var checkBoxes = $("#select input[type='checkbox']");
+        for (var i = 0; i < checkBoxes.length; i++){
+            if(!checkBoxes[i].checked){
+                $('#table td:nth-child('+$(checkBoxes[i]).val()+')').toggleClass("hide");
+            }
+        }
+        $("#select input[type='checkbox']").click(function(){                       
+            $('#table td:nth-child('+$(this).val()+')').toggleClass("hide");
+       });   
+    });
+    </script>
+
+<form action="" method="get" id="select">
+    <input name="column" type="checkbox" value="1" checked />
+    <input name="column" type="checkbox" value="2"  />
+    <input name="column" type="checkbox" value="3"  />
+</form>
+<table border="1" id="table">
+  <tr>
+    <td>000000</td>
+    <td>111111</td>
+    <td>222222</td>
+  </tr>
+  <tr>
+    <td>000000</td>
+   <td>111111</td>
+    <td>222222</td>
+
+  </tr>
+
+  <tr>
+
+    <td>000000</td>
+
+    <td>111111</td>
+
+   <td>222222</td>
+
+  </tr>
+
+</table>
+
